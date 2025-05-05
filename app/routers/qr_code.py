@@ -66,6 +66,28 @@ async def list_qr_codes_endpoint(token: str = Depends(oauth2_scheme)):
     ) for qr_file in qr_files]
     return responses
 
+from fastapi.responses import FileResponse
+import os
+
+@router.get(
+    "/{qr_filename}",
+    summary="Retrieve QR Code",
+    response_class=FileResponse,
+    responses={
+        200: {"content": {"image/png": {}}},
+        404: {"description": "QR code not found"},
+    },
+)
+def retrieve_code(qr_filename: str):
+    """
+    Return the raw PNG file for the given filename.
+    """
+    file_path = os.path.join(QR_DIRECTORY, qr_filename)
+    if not os.path.isfile(file_path):
+        raise HTTPException(status_code=404, detail="QR code not found")
+    return FileResponse(file_path, media_type="image/png")
+
+
 @router.delete("/qr-codes/{qr_filename}", status_code=status.HTTP_204_NO_CONTENT, tags=["QR Codes"])
 async def delete_qr_code_endpoint(qr_filename: str, token: str = Depends(oauth2_scheme)):
     logging.info(f"Deleting QR code: {qr_filename}.")
