@@ -61,7 +61,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/homework-9:latest # Uses the Git SHA for tagging
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}somana-13/homework-9:latest # Uses the Git SHA for tagging
           platforms: linux/amd64,linux/arm64 # Multi-platform support
           
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/homework-9:cache
@@ -71,7 +71,7 @@ jobs:
       - name: Scan the Docker image
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/homework-9:latest'
+          image-ref: '${{ secrets.DOCKERHUB_USERNAME }}somana-13/homework-9:latest'
           format: 'table'
           exit-code: '1' # Fail the job if vulnerabilities are found
           ignore-unfixed: true
