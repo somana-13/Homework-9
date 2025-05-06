@@ -11,9 +11,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-     env :DOCKERHUB_USERNAME:${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN:${{ secrets.DOCKERHUB_TOKEN }}
-
     strategy:
       matrix:
         python-version: [3.10.12] # Define Python versions here
@@ -45,6 +42,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     #environment: production
+    env: 
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       
