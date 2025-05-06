@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     #environment: production
     env: 
-      DOCKERHUB_USERNAME:  ${{  ecrets.DOCKERHUB_USERNAME  }}
+      DOCKERHUB_USERNAME:  ${{  secrets.DOCKERHUB_USERNAME  }}
       DOCKERHUB_TOKEN:     ${{  secrets.DOCKERHUB_TOKEN  }}
     steps:
       - uses: actions/checkout@v4
